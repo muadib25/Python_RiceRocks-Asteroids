@@ -307,9 +307,6 @@ def draw(canvas):
     for i in explosions:
         i.update()
         
-    # Drawing and updating explosions
-    
-
         
 # draw splash screen if not started
     if not started:
@@ -334,8 +331,7 @@ def draw(canvas):
     if group_collide(canvas, rocks, my_ship) == True:
         lives -= 1
         explosion_sound.play() # Replace w/ Red Alert sound
-
-        
+        # explosion(canvas, pos=my_ship.get_position())        
             
 # group_group_collide
     if group_group_collide(canvas, rocks, missiles):
@@ -408,6 +404,7 @@ def group_collide(canvas, group, sprite):
     for i in list(group):
         if i.collide(sprite) == True:
             locations.append(i.get_position())
+            explosion(canvas, pos=i.get_position())
             group.remove(i)
             return True
 
@@ -417,8 +414,7 @@ def group_group_collide(canvas, group1, group2):
     global explosions
     for i in list(group1): 
         if group_collide(canvas, group2, i):
-            
-            explosion(canvas, pos=i.get_position())
+
             group1.remove(i)
             return True
 
