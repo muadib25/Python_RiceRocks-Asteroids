@@ -331,29 +331,26 @@ def draw(canvas):
     if group_collide(canvas, rocks, my_ship) == True:
         lives -= 1
         explosion_sound.play() # Replace w/ Red Alert sound
-        # explosion(canvas, pos=my_ship.get_position())        
             
 # group_group_collide
     if group_group_collide(canvas, rocks, missiles):
         score += 10
-        # explosion_sound.play()
- 
-
+        rock_count -= 1
     
 # timer handler that spawns rocks
 def rock_spawner():
     global rocks, rock_count
-    #if started == True:
-    if rock_count < 10:
-        rocks.add(Sprite([random.randrange(50, WIDTH-50), random.randrange(30, HEIGHT-30)], 
-                         [random.randrange(-2, 2),random.randrange(-2, 2)], 
-                         0, 
-                         random.randrange(-9.0, 9.0) * 0.01, 
-                         asteroid_image, asteroid_info))
-        rock_count += 1
+    if started == True:
+        if rock_count < 10:
+            rocks.add(Sprite([random.randrange(50, WIDTH-50), random.randrange(30, HEIGHT-30)], 
+                             [random.randrange(-2, 2),random.randrange(-2, 2)], 
+                             0, 
+                             random.randrange(-9.0, 9.0) * 0.01, 
+                             asteroid_image, asteroid_info))
+            rock_count += 1
 
-    else:
-        return
+        else:
+            return
     
 # The Explosion function
 def explosion(canvas, pos):
@@ -365,7 +362,7 @@ def explosion(canvas, pos):
 
     
 def keydown(key):
-    global started
+    global started, lives, score
     if (not started):
         if key==simplegui.KEY_MAP["space"]:
             started = True
@@ -379,6 +376,7 @@ def keydown(key):
         if key==simplegui.KEY_MAP["q"]:
             started = False
             soundtrack.rewind()
+            flush_ingame_assets()
             
         if key==simplegui.KEY_MAP["left"]:
             my_ship.turn_left()
@@ -420,11 +418,11 @@ def group_group_collide(canvas, group1, group2):
 
         
 def flush_ingame_assets():
-    global rocks, missiles, explosions
+    global rocks, missiles, explosions, rock_count
     rocks = set([])
     missiles = set([])
     explosions = set([])
-
+    rock_count = 0
 
 
 # initialize frame
@@ -444,8 +442,9 @@ frame.set_keydown_handler(keydown)
 frame.set_keyup_handler(keyup)
 frame.set_mouseclick_handler(click)
 
+
 timer = simplegui.create_timer(1000.0, rock_spawner)
-   
+
     
 # get things rolling
 timer.start()
