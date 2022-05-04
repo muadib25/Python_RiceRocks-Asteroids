@@ -348,7 +348,7 @@ def rock_spawner():
                              random.randrange(-9.0, 9.0) * 0.01, 
                              asteroid_image, asteroid_info))
             rock_count += 1
-            print(rock_count)
+
         else:
             return
     
@@ -377,7 +377,6 @@ def keydown(key):
             started = False
             soundtrack.rewind()
             flush_ingame_assets()
-            print(rock_count)
             
         if key==simplegui.KEY_MAP["left"]:
             my_ship.turn_left()
