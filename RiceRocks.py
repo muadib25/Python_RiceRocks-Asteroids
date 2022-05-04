@@ -342,7 +342,13 @@ def rock_spawner():
     global rocks, rock_count
     if started == True:
         if rock_count < 10:
-            rocks.add(Sprite([random.randrange(50, WIDTH-50), random.randrange(30, HEIGHT-30)], 
+            rocks.add(Sprite([random.randrange(0, WIDTH), random.randrange(0, 30)], 
+                             [random.randrange(-2, 2),random.randrange(-2, 2)], 
+                             0, 
+                             random.randrange(-9.0, 9.0) * 0.01, 
+                             asteroid_image, asteroid_info))
+            rock_count += 1
+            rocks.add(Sprite([random.randrange(0, WIDTH), random.randrange(HEIGHT-30, HEIGHT)], 
                              [random.randrange(-2, 2),random.randrange(-2, 2)], 
                              0, 
                              random.randrange(-9.0, 9.0) * 0.01, 
@@ -443,7 +449,7 @@ frame.set_keyup_handler(keyup)
 frame.set_mouseclick_handler(click)
 
 
-timer = simplegui.create_timer(1000.0, rock_spawner)
+timer = simplegui.create_timer(1600.0, rock_spawner)
 
     
 # get things rolling
