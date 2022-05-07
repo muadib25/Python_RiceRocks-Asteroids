@@ -18,7 +18,6 @@ started = False
 
 expl_time = 0
 expl_loop = 0
-current_explosion_center = 0
 
 class ImageInfo:
     def __init__(self, center, size, radius = 0, lifespan = None, animated = False):
